@@ -8,24 +8,16 @@ A personalized shopping platform where users shop based on their religious and c
 - Virtual Try-On using device camera
 - Swipe-to-delete cart with live total
 - Verified seller badges
-- Multi-community support with unified "Welcome back" experience
 
 ## Tech Stack
 - **Framework:** Flutter (Dart)
-- **State Management:** Provider (ChangeNotifier pattern)
 - **Navigation:** go_router
 - **Local Storage:** shared_preferences
 - **Image Loading:** cached_network_image
 - **Camera:** camera package
 
-## Architecture Decisions
-- **Provider over Riverpod** — simpler for a project of this scope, easier to explain
-- **go_router over Navigator 2.0** — declarative routing with clean URL structure
-- **Hardcoded data over Firebase** — keeps the app self-contained and offline-ready for demo
-- **Separate models, providers, screens folders** — single responsibility per file, easy to scale
-
 ## How to Run
-1. Clone the repo: `git clone https://github.com/YOURUSERNAME/community-mall-app`
+1. Clone the repo: `git clone https://github.com/Nezza983/community_shopping_application.git`
 2. Install dependencies: `flutter pub get`
 3. Run the app: `flutter run`
 
@@ -39,10 +31,10 @@ A personalized shopping platform where users shop based on their religious and c
 7. Order Confirmation — animated checkmark, clears cart
 
 ## What I Would Improve With More Time
-- Real AI-powered virtual try-on using ML Kit or TensorFlow Lite
+- Real AI-powered virtual try-on 
 - Firebase backend for real products and seller verification
 - Search functionality with filters
 - Push notifications for festival deals
 - Multi-language support (Arabic, Hindi, Punjabi)
-- Dark mode support
+- Help Service AI chatbot
 
