@@ -1,88 +1,48 @@
-# Community Mall — Internship Technical Assessment
+# Community Mall — Multi-Community E-Commerce App
 
-> **"Every Community. One Mall."**
-> An e-commerce mobile application built with Flutter.
+A personalized shopping platform where users shop based on their religious and cultural community identity.
 
-# What This App Does
+## Features
+- Community-based personalization (Muslim, Hindu, Christian, Sikh, Buddhist)
+- Festival countdown cards per community
+- Virtual Try-On using device camera
+- Swipe-to-delete cart with live total
+- Verified seller badges
+- Multi-community support with unified "Welcome back" experience
 
-Community Mall is a personalized shopping platform where users shop based on their religious and cultural preferences. When a user selects their community (Muslim, Hindu, Christian, Sikh, or Buddhist), the entire app — products, categories, greetings, and festival countdowns — personalizes itself automatically.
+## Tech Stack
+- **Framework:** Flutter (Dart)
+- **State Management:** Provider (ChangeNotifier pattern)
+- **Navigation:** go_router
+- **Local Storage:** shared_preferences
+- **Image Loading:** cached_network_image
+- **Camera:** camera package
 
-A Muslim user sees abayas, hijabs, and Ramadan collections. A Hindu user sees sarees, kurtas, and Diwali essentials. A Sikh user sees ethnic wear, turbans, and Gurpurab collections. Everyone shops under the same roof.
+## Architecture Decisions
+- **Provider over Riverpod** — simpler for a project of this scope, easier to explain
+- **go_router over Navigator 2.0** — declarative routing with clean URL structure
+- **Hardcoded data over Firebase** — keeps the app self-contained and offline-ready for demo
+- **Separate models, providers, screens folders** — single responsibility per file, easy to scale
 
-# Tech Stack
+## How to Run
+1. Clone the repo: `git clone https://github.com/YOURUSERNAME/community-mall-app`
+2. Install dependencies: `flutter pub get`
+3. Run the app: `flutter run`
 
-| Layer                   | Choice                          | Why 
+## Screens
+1. Splash Screen — auto-navigates after 2 seconds
+2. Community Selection — multi-select, persists to local storage
+3. Home — personalized greeting, festival countdown, product grid
+4. Product Detail — image gallery, size/color picker, virtual try-on
+5. Camera/Try-On — device camera with garment overlay
+6. Cart — swipe to delete, live total, quantity controls
+7. Order Confirmation — animated checkmark, clears cart
 
-| Framework               | Flutter 3.32.5                  | Cross-platform, single codebase for Android + iOS + Web 
-| State Management        | Provider (ChangeNotifier)       | Lightweight, well-supported, industry standard for mid-size apps 
-| Navigation              | go_router                       | Declarative routing, deep link support, clean URL-based navigation 
-| Local Storage           | shared_preferences              | Simple key-value persistence for community selection 
-| Image Loading           | cached_network_image            | Automatic caching, placeholder and error handling built in 
-| Camera                  | camera package                  | Native camera access with CameraController lifecycle management 
-| Fonts                   | google_fonts                    | Playfair Display (headings) + Inter (body) as per brand guidelines 
-| Shimmer                 | shimmer                         | Loading skeleton placeholders for better perceived performance 
+## What I Would Improve With More Time
+- Real AI-powered virtual try-on using ML Kit or TensorFlow Lite
+- Firebase backend for real products and seller verification
+- Search functionality with filters
+- Push notifications for festival deals
+- Multi-language support (Arabic, Hindi, Punjabi)
+- Dark mode support
 
-
-
-# Screens Built
-
-### Screen 1 — Splash
-Logo and tagline fade in over a deep navy background. On init, the app checks SharedPreferences — if a community is already saved, it routes directly to Home, skipping onboarding. First-time users go to Community Selection.
-
-### Screen 2 — Community Selection
-A 2-column grid of 5 community tiles. Tap to toggle selection with a gold animated border. Multi-select is supported — selecting multiple communities shows products from all of them on the home screen. The selection is persisted to local storage so returning users don't repeat onboarding. The profile icon on the home screen lets users return here to change their community at any time.
-
-### Screen 3 — Home
-- Personalized greeting per community (Assalamu Alaikum, Namaste, Sat Sri Akaal, etc.)
-- Festival countdown card — computes days remaining to the next major festival for the selected community using `DateTime.difference()`
-
-### Screen 4 — Product Detail
-- Swipeable image gallery with animated dot indicators using `PageView`
-- Verified seller badge
-- Size chip selector and color dot selector with animated selection states
-- Quantity selector
-- "Add to Cart" (navy) and "Try Virtually" (gold) full-width buttons
-- "Try Virtually" is disabled for products that don't support try-on
-
-### Screen 5 — Camera / Try-On
-- Accesses device camera via `CameraController` with `ResolutionPreset.medium`
-- Instruction overlay and product name badge on the live preview
-- Capture button triggers `controller.takePicture()`
-- Result screen stacks the captured photo with a semi-transparent garment overlay using Flutter's `Stack` widget
-- Graceful fallback for web (simulated try-on with product name overlay)
-- Camera permission handled with try/catch and user-friendly error messaging
-
-### Screen 6 — Cart
-- Live list of cart items from `CartProvider`
-- Swipe left to remove using Flutter's `Dismissible` widget
-- Quantity controls update total in real time
-- "Clear All" button
-- Order total and gold "Checkout" button fixed at the bottom
-
-### Screen 7 — Order Confirmation
-- Animated checkmark using `ScaleTransition` with `Curves.elasticOut`
-- Cart is cleared via `addPostFrameCallback` after the frame renders
-- "Continue Shopping" uses `context.go('/home')` — not `push` — so the back button doesn't return to a cleared cart
-
----
-
-
-# What I Would Improve Given More Time
-
-1. *Real backend integration* — Replace static `ProductData` with a REST API or Firebase Firestore. Community-based filtering would happen server-side.
-
-2. *Actual AI try-on* — Integrate a pose estimation model (MediaPipe or TensorFlow Lite) to fit the garment overlay to the user's body shape rather than a static overlay.
-
-3. *Authentication* — Add Firebase Auth with phone number OTP, which is the most common auth pattern in Indian e-commerce apps.
-
-4. *Search* — Build a full search screen with real-time filtering by name, category, and price range.
-
-5. *Wishlist* — Persist wishlisted products to SharedPreferences with a heart toggle on each product card.
-
-6. *Multi-language* — The community model already has a `greeting` field per language. Full i18n with the `flutter_localizations` package would extend this to all UI strings.
-
-7. *Payment integration* — Razorpay or Stripe Flutter SDK for a real checkout flow.
-
-8. *Performance* — Add shimmer loading skeletons while images load, and implement pagination on the product grid for large catalogs.
-
-9. *Testing* — Unit tests for CartProvider and CommunityProvider, and widget tests for the community selection grid.
